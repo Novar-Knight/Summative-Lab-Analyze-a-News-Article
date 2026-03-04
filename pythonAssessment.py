@@ -1,85 +1,82 @@
-import collections
 import re
+import collections
 
 
-# Count the number of occurrences of a specific word in a text
+# 1️⃣ Count Specific Word (Substring Match)
 def count_specific_word(article, search_word):
-    """
-    Returns the number of times search_word appears in article.
-    Case-insensitive.
-    Returns 0 if no matches are found.
-    """
-    if not article or not search_word:
+
+    if article == "" or search_word == "":
         return 0
-
-    cleaned_text = re.sub(r"[^\w\s]", "", article)
-    word_list = cleaned_text.lower().split()
-
-    return word_list.count(search_word.lower())
+    else:
+        return article.lower().count(search_word.lower())
 
 
-# Identify the most common word in a text
+# 2️⃣ Identify Most Common Word (Must Use Regex)
 def identify_most_common_word(article):
-    """
-    Returns the most common word in the article.
-    Returns None if article is empty.
-    """
-    if not article.strip():
+
+    if article == "":
         return None
+    else:
+        # Use regex to remove punctuation
+        words = re.findall(r"\b\w+\b", article.lower())
 
-    cleaned_text = re.sub(r"[^\w\s]", "", article)
-    word_list = cleaned_text.lower().split()
+        if len(words) == 0:
+            return None
 
-    if not word_list:
-        return None
-
-    most_common_word = collections.Counter(word_list).most_common(1)[0][0]
-    return most_common_word
+        counter = collections.Counter(words)
+        return counter.most_common(1)[0][0]
 
 
-# Calculate average word length
+# 3️⃣ Calculate Average Word Length
 def calculate_average_word_length(article):
-    """
-    Returns the average word length as a float.
-    Excludes punctuation.
-    Returns 0 for empty string.
-    """
-    if not article.strip():
+
+    if article == "":
         return 0.0
 
-    cleaned_text = re.sub(r"[^\w\s]", "", article)
-    word_list = cleaned_text.split()
+    words = re.findall(r"\b\w+\b", article)
 
-    if not word_list:
+    if len(words) == 0:
         return 0.0
 
-    total_letters = sum(len(word) for word in word_list)
-    return total_letters / len(word_list)
+    total_letters = 0
+
+    # REQUIRED for loop
+    for word in words:
+        total_letters += len(word)
+
+    return total_letters / len(words)
 
 
-# Count the number of paragraphs
+# 4️⃣ Count Paragraphs
 def count_paragraphs(article):
-    """
-    Returns the number of paragraphs.
-    Paragraphs are separated by empty lines.
-    Returns 1 for empty string.
-    """
-    if not article.strip():
+
+    if article == "":
         return 1
+    else:
+        paragraphs = article.split("\n\n")
+        count = 0
 
-    paragraphs = re.split(r"\n\s*\n", article.strip())
-    return len(paragraphs)
+        # REQUIRED for loop (extra safety)
+        for paragraph in paragraphs:
+            if paragraph.strip() != "":
+                count += 1
+
+        return count
 
 
-# Count number of sentences
+# 5️⃣ Count Sentences
 def count_sentences(article):
-    """
-    Returns the number of sentences.
-    Sentences end with '.', '!', or '?'.
-    Returns 1 for empty string.
-    """
-    if not article.strip():
+
+    if article == "":
         return 1
 
-    sentences = re.findall(r"[.!?]+", article)
-    return len(sentences)
+    sentence_count = 0
+    index = 0
+
+    # REQUIRED while loop
+    while index < len(article):
+        if article[index] == "." or article[index] == "!" or article[index] == "?":
+            sentence_count += 1
+        index += 1
+
+    return sentence_count
