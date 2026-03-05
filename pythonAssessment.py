@@ -2,7 +2,7 @@ import re
 import collections
 
 
-# 1️⃣ Count Specific Word (Substring Match)
+# Count Specific Word (Substring Match)
 def count_specific_word(article, search_word):
 
     if article == "" or search_word == "":
@@ -11,7 +11,7 @@ def count_specific_word(article, search_word):
         return article.lower().count(search_word.lower())
 
 
-# 2️⃣ Identify Most Common Word (Must Use Regex)
+# Identify Most Common Word (Must Use Regex)
 def identify_most_common_word(article):
 
     if article == "":
@@ -27,7 +27,7 @@ def identify_most_common_word(article):
         return counter.most_common(1)[0][0]
 
 
-# 3️⃣ Calculate Average Word Length
+# Calculate Average Word Length
 def calculate_average_word_length(article):
 
     if article == "":
@@ -47,7 +47,7 @@ def calculate_average_word_length(article):
     return total_letters / len(words)
 
 
-# 4️⃣ Count Paragraphs
+# Count Paragraphs
 def count_paragraphs(article):
 
     if article == "":
@@ -56,7 +56,7 @@ def count_paragraphs(article):
         paragraphs = article.split("\n\n")
         count = 0
 
-        # REQUIRED for loop (extra safety)
+        #  for loop (extra safety)
         for paragraph in paragraphs:
             if paragraph.strip() != "":
                 count += 1
@@ -64,7 +64,7 @@ def count_paragraphs(article):
         return count
 
 
-# 5️⃣ Count Sentences
+# Count Sentences
 def count_sentences(article):
 
     if article == "":
@@ -73,7 +73,7 @@ def count_sentences(article):
     sentence_count = 0
     index = 0
 
-    # REQUIRED while loop
+    # while loop
     while index < len(article):
         if article[index] == "." or article[index] == "!" or article[index] == "?":
             sentence_count += 1
